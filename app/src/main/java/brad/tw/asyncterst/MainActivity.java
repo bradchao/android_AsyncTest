@@ -7,30 +7,32 @@ import android.util.Log;
 import android.view.View;
 
 public class MainActivity extends AppCompatActivity {
-
+    private MyTask mt1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
     }
     public void test1(View v){
-
+        mt1 = new MyTask();
+        mt1.execute();
+    }
+    public void test2(View v){
+        
     }
 
     private class MyTask extends AsyncTask<Void,Void,Void>{
-
-        @Override
-        protected Void doInBackground(Void... params) {
-            Log.d("brad", "doInBackground");
-            return null;
-        }
 
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
             Log.d("brad", "onPreExecute");
         }
-
+        @Override
+        protected Void doInBackground(Void... params) {
+            Log.d("brad", "doInBackground");
+            return null;
+        }
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
