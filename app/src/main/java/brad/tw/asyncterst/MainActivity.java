@@ -15,13 +15,15 @@ public class MainActivity extends AppCompatActivity {
     }
     public void test1(View v){
         mt1 = new MyTask();
-        mt1.execute();
+        mt1.execute("Brad","Kevin","Tony","Peter","Eric");
     }
     public void test2(View v){
-        
+        if (mt1 != null && !mt1.isCancelled()){
+            mt1.cancel(true);
+        }
     }
 
-    private class MyTask extends AsyncTask<Void,Void,Void>{
+    private class MyTask extends AsyncTask<String,Void,Void>{
 
         @Override
         protected void onPreExecute() {
@@ -29,8 +31,17 @@ public class MainActivity extends AppCompatActivity {
             Log.d("brad", "onPreExecute");
         }
         @Override
-        protected Void doInBackground(Void... params) {
+        protected Void doInBackground(String... params) {
             Log.d("brad", "doInBackground");
+
+            for (String name : params){
+                Log.d("brad", "Hello, " + name);
+                try {
+                    Thread.sleep(500);
+                } catch (InterruptedException e) {
+                }
+            }
+
             return null;
         }
         @Override
