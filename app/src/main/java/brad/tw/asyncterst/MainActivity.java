@@ -26,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private class MyTask extends AsyncTask<String,Object,Void>{
+    private class MyTask extends AsyncTask<String,Object,String>{
 
         @Override
         protected void onPreExecute() {
@@ -34,11 +34,16 @@ public class MainActivity extends AppCompatActivity {
             Log.d("brad", "onPreExecute");
         }
         @Override
-        protected Void doInBackground(String... params) {
+        protected String doInBackground(String... params) {
             Log.d("brad", "doInBackground");
 
-            int i = 0;
+            int i = 0; boolean isCancel = false;
             for (String name : params){
+                if (isCancelled()){
+                    isCancel = true;
+                    break;
+                }
+
                 Log.d("brad", "Hello, " + name);
                 i++;
                 publishProgress(i, name);
@@ -48,12 +53,12 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
 
-            return null;
+            return isCancel?"Cancel!":"Game Over";
         }
         @Override
-        protected void onPostExecute(Void aVoid) {
-            super.onPostExecute(aVoid);
-            Log.d("brad", "onPostExecute");
+        protected void onPostExecute(String end) {
+            super.onPostExecute(end);
+            Log.d("brad", "onPostExecute:" + end);
         }
 
         @Override
@@ -64,9 +69,9 @@ public class MainActivity extends AppCompatActivity {
         }
 
         @Override
-        protected void onCancelled(Void aVoid) {
-            super.onCancelled(aVoid);
-            Log.d("brad", "onCancelled");
+        protected void onCancelled(String end) {
+            super.onCancelled(end);
+            Log.d("brad", "onCancelled:" +end);
         }
     }
 
