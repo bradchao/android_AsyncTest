@@ -26,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private class MyTask extends AsyncTask<String,Integer,Void>{
+    private class MyTask extends AsyncTask<String,Object,Void>{
 
         @Override
         protected void onPreExecute() {
@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
             for (String name : params){
                 Log.d("brad", "Hello, " + name);
                 i++;
-                publishProgress(i, i+100, i+1000);
+                publishProgress(i, name);
                 try {
                     Thread.sleep(500);
                 } catch (InterruptedException e) {
@@ -57,10 +57,10 @@ public class MainActivity extends AppCompatActivity {
         }
 
         @Override
-        protected void onProgressUpdate(Integer... values) {
+        protected void onProgressUpdate(Object... values) {
             super.onProgressUpdate(values);
             Log.d("brad", "onProgressUpdate");
-            mesg.setText(values[0] + ":" + values[1] + ":" +values[2]);
+            mesg.setText((Integer)values[0] + ":" + (String)values[1]);
         }
 
         @Override
