@@ -5,13 +5,16 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
     private MyTask mt1;
+    private TextView mesg;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        mesg = (TextView)findViewById(R.id.mesg);
     }
     public void test1(View v){
         mt1 = new MyTask();
@@ -23,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private class MyTask extends AsyncTask<String,Void,Void>{
+    private class MyTask extends AsyncTask<String,Integer,Void>{
 
         @Override
         protected void onPreExecute() {
@@ -34,8 +37,11 @@ public class MainActivity extends AppCompatActivity {
         protected Void doInBackground(String... params) {
             Log.d("brad", "doInBackground");
 
+            int i = 0;
             for (String name : params){
                 Log.d("brad", "Hello, " + name);
+                i++;
+                publishProgress(i, i+100, i+1000);
                 try {
                     Thread.sleep(500);
                 } catch (InterruptedException e) {
@@ -51,9 +57,10 @@ public class MainActivity extends AppCompatActivity {
         }
 
         @Override
-        protected void onProgressUpdate(Void... values) {
+        protected void onProgressUpdate(Integer... values) {
             super.onProgressUpdate(values);
             Log.d("brad", "onProgressUpdate");
+            mesg.setText(values[0] + ":" + values[1] + ":" +values[2]);
         }
 
         @Override
